@@ -59,22 +59,17 @@ client.on('interactionCreate', async (interaction) => {
       console.error('Error fetching channels:', error);
       return;
     }
-    console.log('Total voice channels:', channels.size);
 
     // Filter voice channels to exclude the current channel
     const voiceChannels = channels.filter(channel => channel !== voiceChannel);
 
-    console.log('All voice channels:', voiceChannels);
-
     if (voiceChannels.size === 0) {
-      console.log('No other voice channels found.');
       await interaction.reply('No other voice channels found.');
       return;
     }
 
     // Move the user to a random voice channel
     const randomVoiceChannel = voiceChannels.random();
-    console.log('Random voice channel:', randomVoiceChannel);
 
     await targetMember.voice.setChannel(randomVoiceChannel);
 
@@ -82,6 +77,7 @@ client.on('interactionCreate', async (interaction) => {
     await targetMember.voice.setChannel(voiceChannel);
 
     await interaction.reply(`HOP ${targetMember.user.username} PETIT PAS DE DANSE POUR TOI`);
+    console.log(`${interaction.user.username} moved ${targetMember.user.username}`);
   }
 });
 
