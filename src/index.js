@@ -78,6 +78,7 @@ client.on('interactionCreate', async (interaction) => {
 
     await interaction.reply(`HOP ${targetMember.user.username} PETIT PAS DE DANSE POUR TOI`);
     console.log(`${interaction.user.username} moved ${targetMember.user.username}`);
+    
   }
 });
 
