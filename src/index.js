@@ -23,7 +23,11 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildPresences,
-    
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.DirectMessageTyping,
   ],
 });
 
@@ -73,8 +77,13 @@ client.on('interactionCreate', async (interaction) => {
     }
 
     const interactionMember = guild.members.cache.get(interaction.user.id);
-    if (interactionMember && targetUser !== voiceChannel) {
-      await interaction.reply("Tu n'es pas dans le même channel vocal que l'utilisateur ciblé.");
+    if (!interactionMember.voice.channel) {
+      await interaction.reply("Tu dois être dans un salon vocal pour utiliser cette commande.");
+      return;
+    }
+  
+    if (interactionMember.voice.channel !== voiceChannel) {
+      await interaction.reply("Tu n'es pas dans le même salon vocal que l'utilisateur ciblé.");
       return;
     }
 
@@ -130,10 +139,15 @@ client.on('interactionCreate', async (interaction) => {
     }
 
     const interactionMember = guild.members.cache.get(interaction.user.id);
-    if (interactionMember && targetUser !== voiceChannel) {
-      await interaction.reply("Tu n'es pas dans le même channel vocal que l'utilisateur ciblé.");
-      return;
-    }
+    if (!interactionMember.voice.channel) {
+    await interaction.reply("Tu dois être dans un salon vocal pour utiliser cette commande.");
+    return;
+  }
+
+    if (interactionMember.voice.channel !== voiceChannel) {
+    await interaction.reply("Tu n'es pas dans le même salon vocal que l'utilisateur ciblé.");
+    return;
+  }
 
     let voiceChannels;
     try {
