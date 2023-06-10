@@ -162,8 +162,8 @@ client.on('interactionCreate', async (interaction) => {
         await targetMember.voice.setChannel(channel);
         previousChannel = channel;
   
-        // Ajouter une pause de 500ms entre chaque déplacement
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Ajouter une pause de 0ms entre chaque déplacement
+        await new Promise(resolve => setTimeout(resolve, 0));
       }
     }
   
