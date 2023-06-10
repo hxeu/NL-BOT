@@ -7,6 +7,7 @@ import {
 import { REST } from '@discordjs/rest';
 import MoveCommand from './commands/move.js';
 import TourCommand from './commands/tour.js';
+import NukeCommand from './commands/nuke.js';
 
 
 config();
@@ -50,6 +51,23 @@ client.on('messageCreate', (message) => {
 
 
 client.on('interactionCreate', async (interaction) => {
+  if (interaction.commandName === 'nuke') {
+    await interaction.deferReply(); // Défère la réponse initiale
+    
+    // Crée un message de base avec un pourcentage initial de 0
+    const reply = await interaction.editReply('Le serveur va disparaitre... byebye :) 0% 🚀');
+
+    // Boucle pour mettre à jour le pourcentage de 0% à 99%
+    for (let i = 1; i <= 99; i++) {
+      // Met à jour le message avec le nouveau pourcentage
+      await reply.edit(`Le serveur va disparaitre... byebye :) ${i}% 🚀`);
+      await new Promise(resolve => setTimeout(resolve, 1)); // Attend 100 millisecondes
+    }
+
+    // Message de chargement terminé
+    await reply.edit('ERREUR 404 : CHARGEMENT IMPOSSIBLE ❌❌❌ NUKE ANNULÉ ❌❌❌');
+  }
+
   if (interaction.commandName === 'move') {
     const guild = await client.guilds.fetch(interaction.guild.id);
 
@@ -185,6 +203,7 @@ async function main() {
   const commands = [
     MoveCommand,
     TourCommand,
+    NukeCommand,
   ];
   try {
     console.log('Started refreshing application (/) commands.');
