@@ -29,6 +29,17 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 client.on('ready', () => console.log(`${client.user.tag} has logged in!`));
 
+client.on('messageCreate', (message) => {
+  // Convertir le contenu du message en minuscules
+  const content = message.content.toLowerCase();
+  
+  // Vérifier si le message contient le mot spécifique en minuscules
+  if (content.includes('eiji') || content.includes('jordan')) {
+    // Envoyer une réponse à l'auteur du message
+    message.reply("tu vois tu vois 😡😡💢 est-ce que t'as vu que le bazooka 💥😡il me l'a mis à moi 😢 alors qu'il t'a vu avant 👀🫵 vasy tranquille 😤😤dites ce que vous voulez les frères 🥲🥲");
+  }
+});
+
 client.on('interactionCreate', async (interaction) => {
   if (interaction.commandName === 'move') {
     const guild = client.guilds.cache.get(GUILD_ID);
