@@ -23,11 +23,6 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessageTyping,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.DirectMessageReactions,
-    GatewayIntentBits.DirectMessageTyping,
   ],
 });
 
@@ -158,7 +153,6 @@ client.on('interactionCreate', async (interaction) => {
     }
 
     const sortedChannels = voiceChannels.sort((a, b) => a.rawPosition - b.rawPosition);
-    let previousChannel;
 
     await interaction.deferReply();
 
