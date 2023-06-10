@@ -22,6 +22,7 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildPresences,
+    
   ],
 });
 
@@ -29,16 +30,22 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 client.on('ready', () => console.log(`${client.user.tag} has logged in!`));
 
+
 client.on('messageCreate', (message) => {
-  // Convertir le contenu du message en minuscules
   const content = message.content.toLowerCase();
-  
-  // Vérifier si le message contient le mot spécifique en minuscules
   if (content.includes('eiji') || content.includes('jordan')) {
-    // Envoyer une réponse à l'auteur du message
-    message.reply("tu vois tu vois 😡😡💢 est-ce que t'as vu que le bazooka 💥😡il me l'a mis à moi 😢 alors qu'il t'a vu avant 👀🫵 vasy tranquille 😤😤dites ce que vous voulez les frères 🥲🥲");
+    
+    const responses = [
+      "tu vois tu vois 😡😡💢 est-ce que t'as vu que le bazooka 💥😡il me l'a mis à moi 😢 alors qu'il t'a vu avant 👀🫵 vasy tranquille 😤😤dites ce que vous voulez les frères 🥲🥲",
+      'https://cdn.discordapp.com/attachments/1117035450591354931/1117035679180922961/le-J-word.mp4',
+    ];
+
+    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    message.channel.send(randomResponse);
+    }
   }
-});
+);
+
 
 client.on('interactionCreate', async (interaction) => {
   if (interaction.commandName === 'move') {
