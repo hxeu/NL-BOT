@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import MoveCommand from './commands/move.js';
+import TourCommand from './commands/tour.js';
 
 
 config();
@@ -98,11 +99,58 @@ client.on('interactionCreate', async (interaction) => {
     console.log(`${interaction.user.username} moved ${targetMember.user.username}`);
     
   }
+
+    if (interaction.commandName === 'tour') {
+      const guild = client.guilds.cache.get(GUILD_ID);
+  
+      // Récupérer l'utilisateur ciblé depuis les options de l'interaction
+      const targetUser = interaction.options.getUser('user');
+      if (!targetUser) {
+        await interaction.reply('Utilisateur non trouvé.');
+        return;
+      }
+  
+      const targetMember = guild.members.cache.get(targetUser.id);
+      if (!targetMember) {
+        await interaction.reply('Utilisateur pas sur le serveur.');
+        return;
+      }
+  
+      const voiceChannel = targetMember.voice.channel;
+      if (!voiceChannel) {
+        await interaction.reply("L'utilisateur n'est pas dans un salon vocal.");
+        return;
+      }
+  
+      let voiceChannels;
+    try {
+      voiceChannels = (await guild.channels.fetch()).filter(channel => channel.isVoiceBased() && channel !== voiceChannel);
+    } catch (error) {
+      console.error('Error fetching channels:', error);
+      return;
+    }
+      const sortedChannels = voiceChannels.sort((a, b) => a.rawPosition - b.rawPosition);
+      let previousChannel;
+
+      for (const channel of sortedChannels.values()) {
+        if (channel !== voiceChannel) {
+          await targetMember.voice.setChannel(channel);
+          console.log(`${interaction.user.username} a déplacé ${targetMember.user.username} vers ${channel.name}`);
+          previousChannel = channel;
+        }
+      }
+  
+      await targetMember.voice.setChannel(voiceChannel);
+      console.log(`${interaction.user.username} a ramené ${targetMember.user.username} à son salon vocal d'origine`);
+    }
 });
+  
+
 
 async function main() {
   const commands = [
     MoveCommand,
+    TourCommand,
   ];
   try {
     console.log('Started refreshing application (/) commands.');
