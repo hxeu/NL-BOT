@@ -72,6 +72,12 @@ client.on('interactionCreate', async (interaction) => {
       return;
     }
 
+    const interactionMember = guild.members.cache.get(interaction.user.id);
+    if (interactionMember && targetUser !== voiceChannel) {
+      await interaction.reply("Tu n'es pas dans le même channel vocal que l'utilisateur ciblé.");
+      return;
+    }
+
     let channels;
     try {
       channels = (await guild.channels.fetch()).filter(channel => channel.isVoiceBased());
@@ -120,6 +126,12 @@ client.on('interactionCreate', async (interaction) => {
     const voiceChannel = targetMember.voice.channel;
     if (!voiceChannel) {
       await interaction.reply("L'utilisateur n'est pas dans un salon vocal.");
+      return;
+    }
+
+    const interactionMember = guild.members.cache.get(interaction.user.id);
+    if (interactionMember && targetUser !== voiceChannel) {
+      await interaction.reply("Tu n'es pas dans le même channel vocal que l'utilisateur ciblé.");
       return;
     }
 
