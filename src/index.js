@@ -38,6 +38,8 @@ client.on('messageCreate', (message) => {
       "tu vois tu vois 😡😡💢 est-ce que t'as vu que le bazooka 💥😡il me l'a mis à moi 😢 alors qu'il t'a vu avant 👀🫵 vasy tranquille 😤😤dites ce que vous voulez les frères 🥲🥲",
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117035679180922961/le-J-word.mp4',
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117071070646775910/RAZE.jpg',
+      'https://cdn.discordapp.com/attachments/1117035450591354931/1117155801342169118/pas-le-meme-spray.png',
+      'les egirls 👧 arrêtez 🖐️🛑 de jouer ⏯️ à valo',
     ];
 
     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
