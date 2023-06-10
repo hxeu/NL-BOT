@@ -105,44 +105,44 @@ client.on('interactionCreate', async (interaction) => {
     // Move the user back to their original voice channel
     await targetMember.voice.setChannel(voiceChannel);
 
-    await interaction.reply(`HOP ${targetMember.user.username} PETIT PAS DE DANSE POUR TOI`);
+    await interaction.reply({content: `ça a bien marché, ${targetMember.user.username} a laché un petit pas de danse pour toi :)`, ephemeral: true});
     console.log(`${interaction.user.username} moved ${targetMember.user.username}`);
     
   }
 
   if (interaction.commandName === 'tour') {
     const guild = client.guilds.cache.get(interaction.guild.id);
-
+  
     // Récupérer l'utilisateur ciblé depuis les options de l'interaction
     const targetUser = interaction.options.getUser('user');
     if (!targetUser) {
       await interaction.reply('Utilisateur non trouvé.');
       return;
     }
-
+  
     const targetMember = guild.members.cache.get(targetUser.id);
     if (!targetMember) {
       await interaction.reply('Utilisateur pas sur le serveur.');
       return;
     }
-
+  
     const voiceChannel = targetMember.voice.channel;
     if (!voiceChannel) {
       await interaction.reply("L'utilisateur n'est pas dans un salon vocal.");
       return;
     }
-
+  
     const interactionMember = guild.members.cache.get(interaction.user.id);
     if (!interactionMember.voice.channel) {
-    await interaction.reply("Tu dois être dans un salon vocal pour utiliser cette commande.");
-    return;
-  }
-
+      await interaction.reply("Tu dois être dans un salon vocal pour utiliser cette commande.");
+      return;
+    }
+  
     if (interactionMember.voice.channel !== voiceChannel) {
-    await interaction.reply("Tu n'es pas dans le même salon vocal que l'utilisateur ciblé.");
-    return;
-  }
-
+      await interaction.reply("Tu n'es pas dans le même salon vocal que l'utilisateur ciblé.");
+      return;
+    }
+  
     let voiceChannels;
     try {
       voiceChannels = (await guild.channels.fetch()).filter(channel => channel.isVoiceBased() && channel !== voiceChannel);
@@ -150,29 +150,30 @@ client.on('interactionCreate', async (interaction) => {
       console.error('Error fetching channels:', error);
       return;
     }
-
+  
     const sortedChannels = voiceChannels.sort((a, b) => a.rawPosition - b.rawPosition);
     let previousChannel;
+  
+    await interaction.deferReply({ ephemeral: true });
 
-    await interaction.deferReply();
-
+  
     for (const channel of sortedChannels.values()) {
       if (channel !== voiceChannel) {
         await targetMember.voice.setChannel(channel);
         previousChannel = channel;
-
+  
         // Ajouter une pause de 500ms entre chaque déplacement
         await new Promise(resolve => setTimeout(resolve, 500));
       }
     }
-
+  
     // Déplacer l'utilisateur vers le salon vocal d'origine
     await targetMember.voice.setChannel(voiceChannel);
     console.log(`${interaction.user.username} a fait un tour des channels à ${targetMember.user.username}`);
-
-    // Répondre à l'interaction initiale dans le canal où la commande a été utilisée
-    await interaction.followUp(`ALLEZ HOP ${targetMember.user.username} T'AS FAIT LE TOUR DES CHANNELS MON GARS`);
-  }
+  
+    // Envoyer un message dans le même canal où la commande a été utilisée, visible uniquement par l'utilisateur qui a exécuté la commande
+    await interaction.editReply({ content: `C'est bon, ${targetMember.user.username} a bien fait le tour des channels !`});
+  } 
 });
   
   
