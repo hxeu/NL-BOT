@@ -60,11 +60,12 @@ client.on('interactionCreate', async (interaction) => {
     for (let i = 1; i <= 99; i++) {
       // Met à jour le message avec le nouveau pourcentage
       await reply.edit(`Le serveur va disparaitre... byebye :) ${i}% 🚀`);
-      await new Promise(resolve => setTimeout(resolve, 1)); // Attend 100 millisecondes
+      await new Promise(resolve => setTimeout(resolve, 1)); // Attend 1 millisecondes
     }
 
     // Message de chargement terminé
     await reply.edit('ERREUR 404 : CHARGEMENT IMPOSSIBLE ❌❌❌ NUKE ANNULÉE ❌❌❌');
+    console.log(`${interaction.user.username} a laché une nuke`);
   }
 
   if (interaction.commandName === 'move') {
