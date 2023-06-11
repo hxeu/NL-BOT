@@ -64,7 +64,7 @@ client.on('interactionCreate', async (interaction) => {
     }
 
     // Message de chargement terminé
-    await reply.edit('ERREUR 404 : CHARGEMENT IMPOSSIBLE ❌❌❌ NUKE ANNULÉ ❌❌❌');
+    await reply.edit('ERREUR 404 : CHARGEMENT IMPOSSIBLE ❌❌❌ NUKE ANNULÉE ❌❌❌');
   }
 
   if (interaction.commandName === 'move') {
