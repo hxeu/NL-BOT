@@ -4,12 +4,10 @@ import {
   GatewayIntentBits,
   Routes,
 } from 'discord.js';
-import { Express } from 'express';
 import { REST } from '@discordjs/rest';
 import MoveCommand from './src/commands/move.js';
 import TourCommand from './src/commands/tour.js';
 import NukeCommand from './src/commands/nuke.js';
-
 
 config();
 
@@ -211,9 +209,9 @@ async function main() {
     await rest.put(Routes.applicationCommands(CLIENT_ID), {
       body: commands,
     });
-    client.login(TOKEN);
+    await client.login(TOKEN);
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 
