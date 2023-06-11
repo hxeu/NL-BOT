@@ -1,8 +1,8 @@
 {
-  "name": "djs-v14-tutorial",
+  "name": "nl-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon ./src/index.js"
