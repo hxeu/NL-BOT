@@ -4,6 +4,7 @@ import {
   GatewayIntentBits,
   Routes,
 } from 'discord.js';
+import { Express } from 'express';
 import { REST } from '@discordjs/rest';
 import MoveCommand from './src/commands/move.js';
 import TourCommand from './src/commands/tour.js';
