@@ -5,9 +5,9 @@ import {
   Routes,
 } from 'discord.js';
 import { REST } from '@discordjs/rest';
-import MoveCommand from './commands/move.js';
-import TourCommand from './commands/tour.js';
-import NukeCommand from './commands/nuke.js';
+import MoveCommand from './src/commands/move.js';
+import TourCommand from './src/commands/tour.js';
+import NukeCommand from './src/commands/nuke.js';
 
 
 config();
