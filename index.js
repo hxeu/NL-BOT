@@ -11,6 +11,8 @@ import NukeCommand from './src/commands/nuke.js';
 
 config();
 
+const TOKEN = process.env.BOT_TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID;
 
 const client = new Client({
   intents: [
