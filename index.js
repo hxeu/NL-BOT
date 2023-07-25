@@ -8,7 +8,6 @@ import { REST } from '@discordjs/rest';
 import MoveCommand from './src/commands/move.js';
 import TourCommand from './src/commands/tour.js';
 import NukeCommand from './src/commands/nuke.js';
-import RtoCommand from './src/commands/rto.js';
 
 config();
 
@@ -207,7 +206,6 @@ async function main() {
     MoveCommand,
     TourCommand,
     NukeCommand,
-    RtoCommand,
   ];
   try {
     console.log('Started refreshing application (/) commands.');
