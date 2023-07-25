@@ -41,7 +41,7 @@ client.on('messageCreate', (message) => {
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117155801342169118/pas-le-meme-spray.png',
       'les egirls 👧 arrêtez 🖐️🛑 de jouer ⏯️ à valo',
       'https://cdn.discordapp.com/attachments/1117035450591354931/1133304217621254155/eijipedo.png',
-      'https://cdn.discordapp.com/attachments/1117035450591354931/1133304952404582440/pasdedodopoureiji.png',
+      'https://cdn.discordapp.com/attachments/1117035450591354931/1133304952404582440/pasdedodopoureiji.png'
     ];
 
     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
