@@ -8,6 +8,7 @@ import { REST } from '@discordjs/rest';
 import MoveCommand from './src/commands/move.js';
 import TourCommand from './src/commands/tour.js';
 import NukeCommand from './src/commands/nuke.js';
+import RtoCommand from './src/commands/rto.js';
 
 config();
 
@@ -40,6 +41,8 @@ client.on('messageCreate', (message) => {
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117071070646775910/RAZE.jpg',
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117155801342169118/pas-le-meme-spray.png',
       'les egirls 👧 arrêtez 🖐️🛑 de jouer ⏯️ à valo',
+      'https://cdn.discordapp.com/attachments/1117035450591354931/1133304217621254155/eijipedo.png',
+      'https://cdn.discordapp.com/attachments/1117035450591354931/1133304952404582440/pasdedodopoureiji.png',
     ];
 
     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
@@ -204,6 +207,7 @@ async function main() {
     MoveCommand,
     TourCommand,
     NukeCommand,
+    RtoCommand,
   ];
   try {
     console.log('Started refreshing application (/) commands.');
