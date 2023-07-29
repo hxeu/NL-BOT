@@ -134,37 +134,37 @@ client.on('interactionCreate', async (interaction) => {
 
   if (interaction.commandName === 'tour') {
     const guild = client.guilds.cache.get(interaction.guild.id);
-  
+
     // Récupérer l'utilisateur ciblé depuis les options de l'interaction
     const targetUser = interaction.options.getUser('user');
     if (!targetUser) {
       await interaction.reply('Utilisateur non trouvé.');
       return;
     }
-  
+
     const targetMember = guild.members.cache.get(targetUser.id);
     if (!targetMember) {
       await interaction.reply('Utilisateur pas sur le serveur.');
       return;
     }
-  
+
     const voiceChannel = targetMember.voice.channel;
     if (!voiceChannel) {
       await interaction.reply("L'utilisateur n'est pas dans un salon vocal.");
       return;
     }
-  
+
     const interactionMember = guild.members.cache.get(interaction.user.id);
     if (!interactionMember.voice.channel) {
       await interaction.reply("Tu dois être dans un salon vocal pour utiliser cette commande.");
       return;
     }
-  
+
     if (interactionMember.voice.channel !== voiceChannel) {
       await interaction.reply("Tu n'es pas dans le même salon vocal que l'utilisateur ciblé.");
       return;
     }
-  
+
     let voiceChannels;
     try {
       voiceChannels = (await guild.channels.fetch()).filter(channel => channel.isVoiceBased() && channel !== voiceChannel);
@@ -172,29 +172,42 @@ client.on('interactionCreate', async (interaction) => {
       console.error('Error fetching channels:', error);
       return;
     }
-  
+
     const sortedChannels = voiceChannels.sort((a, b) => a.rawPosition - b.rawPosition);
     let previousChannel;
-  
+
     await interaction.deferReply({ ephemeral: true });
 
-  
-    for (const channel of sortedChannels.values()) {
-      if (channel !== voiceChannel) {
-        await targetMember.voice.setChannel(channel);
-        previousChannel = channel;
-  
-        // Ajouter une pause de 0ms entre chaque déplacement
-        await new Promise(resolve => setTimeout(resolve, 0));
+    try {
+      for (const channel of sortedChannels.values()) {
+        if (channel !== voiceChannel) {
+          await targetMember.voice.setChannel(channel);
+          previousChannel = channel;
+
+          // Ajouter une pause de 0ms entre chaque déplacement
+          await new Promise(resolve => setTimeout(resolve, 0));
+        }
       }
+    } catch (error) {
+      console.error('Error moving user:', error);
+      await interaction.editReply(`/tour annulé, ${targetMember.user.username} a deco dicord.`);
+      await interaction.channel.send({ content:`HAHA BAH ALORS ${targetMember.user.username} T'AS DECO LE /TOUR ??` });
+      return;
+
+
     }
-  
+
     // Déplacer l'utilisateur vers le salon vocal d'origine
-    await targetMember.voice.setChannel(voiceChannel);
-    console.log(`${interaction.user.username} a fait un tour des channels à ${targetMember.user.username}`);
-  
-    // Envoyer un message dans le même canal où la commande a été utilisée, visible uniquement par l'utilisateur qui a exécuté la commande
-    await interaction.editReply({ content: `C'est bon, ${targetMember.user.username} a bien fait le tour des channels !`});
+    try {
+      await targetMember.voice.setChannel(voiceChannel);
+      console.log(`${interaction.user.username} a fait un tour des channels à ${targetMember.user.username}`);
+
+      // Envoyer un message dans le même canal où la commande a été utilisée, visible uniquement par l'utilisateur qui a exécuté la commande
+      await interaction.editReply({ content: `C'est bon, ${targetMember.user.username} a bien fait le tour des channels !` });
+    } catch (error) {
+      console.error('Error moving user back to original channel:', error);
+      await interaction.editReply('Une erreur est survenue lors du déplacement de l\'utilisateur vers le salon d\'origine.');
+    }
   } 
 });
   
