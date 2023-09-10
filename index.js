@@ -40,7 +40,6 @@ client.on('messageCreate', (message) => {
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117071070646775910/RAZE.jpg',
       'https://cdn.discordapp.com/attachments/1117035450591354931/1117155801342169118/pas-le-meme-spray.png',
       'les egirls 👧 arrêtez 🖐️🛑 de jouer ⏯️ à valo',
-      'https://cdn.discordapp.com/attachments/1117035450591354931/1133310470531592302/pedo.png',
       'https://cdn.discordapp.com/attachments/1117035450591354931/1133310728208666754/pasdedodo.png',
     ];
 
